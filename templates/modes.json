@@ -1,0 +1,57 @@
+{
+  "requirement": {
+    "label": "需求拆解",
+    "description": "新功能 / 跨模块改动 / 边界不清：把需求问清，产出方案写法事实",
+    "when_to_use": "收到新功能、改已有能力、加筛选/状态/字段等需求，要 grill → spec → tickets",
+    "flow": "grill-with-docs → to-spec → to-tickets → implement",
+    "discipline": "grilling：按 本质→归属→复用→新增→接口→流程→影响 长决策树；decision 节点必给推荐答案，事实类节点标 fact 自己查",
+    "skills": {
+      "analyze": "grilling / grill-with-docs",
+      "after": ["to-spec", "to-tickets"]
+    }
+  },
+  "bug": {
+    "label": "Bug 分析",
+    "description": "定位根因：一切基于实际观察与证据，禁止猜测",
+    "when_to_use": "线上/开发报错、偶发故障、性能回归、数据不对，需要找根因并修复",
+    "flow": "diagnosing-bugs（复现回路 → 缩小 → 证据 → 根因 → 修复 → 回归）",
+    "discipline": "diagnosing-bugs：复现回路与证据必须是 fact 节点（AI 查证）；root_cause 依赖它们，从机制上禁止跳到猜测",
+    "skills": {
+      "analyze": "diagnosing-bugs",
+      "after": []
+    }
+  },
+  "architecture": {
+    "label": "理解架构",
+    "description": "澄清术语、识别边界与 shallow module，锁定架构决策",
+    "when_to_use": "术语混乱、模块边界模糊、要做架构体检或锁定难以逆转的决策",
+    "flow": "domain-modeling / codebase-design / improve-codebase-architecture",
+    "discipline": "domain-modeling：术语节点 output=term 进 CONTEXT.md，选定方案节点 output=decision 写 ADR",
+    "skills": {
+      "analyze": "domain-modeling / codebase-design",
+      "after": []
+    }
+  },
+  "migration": {
+    "label": "大型迁移",
+    "description": "大型模糊工程：画决策地图，逐个拍板，产出决策而非代码",
+    "when_to_use": "大型迁移、路径不明、一次会话装不下，需要决策地图",
+    "flow": "wayfinder → to-spec → to-tickets",
+    "discipline": "wayfinder：目的地 / fog（还问不清）/ frontier（现在能走的第一步）/ 关键决策 长树",
+    "skills": {
+      "analyze": "wayfinder",
+      "after": ["to-spec", "to-tickets"]
+    }
+  },
+  "free": {
+    "label": "自由",
+    "description": "不预置问题，全部由 AI add_nodes 传入",
+    "when_to_use": "宿主 AI 已分析好待拍板点，直接 add_nodes",
+    "flow": "任意",
+    "discipline": "无固定纪律，AI 自定决策树",
+    "skills": {
+      "analyze": "",
+      "after": []
+    }
+  }
+}
