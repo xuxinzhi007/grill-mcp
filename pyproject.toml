@@ -1,0 +1,9 @@
+[project]
+name = "grill-mcp"
+version = "0.1.0"
+description = "需求澄清访谈引擎 MCP：把模糊需求整理成不可含糊的事实，逐题向用户确认"
+requires-python = ">=3.10"
+dependencies = ["mcp>=1.0,<2"]
+
+[tool.uv]
+package = false

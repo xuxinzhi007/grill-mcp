@@ -1,0 +1,8 @@
+{
+  "transport": "stdio",
+  "host": "127.0.0.1",
+  "port": 8000,
+  "token": "",
+  "session_db": "~/.qoder/grill-mcp/sessions.db",
+  "output_dir": "~/.qoder/grill-mcp/outputs"
+}

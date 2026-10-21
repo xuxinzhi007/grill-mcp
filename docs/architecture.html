@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>grill-mcp 需求澄清访谈引擎架构</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js" integrity="sha384-WmdflGW9aGfoBdHc4rRyWzYuAjEmDwMdGdiPNacbwfGKxBW/SO6guzuQ76qjnSlr" crossorigin="anonymous"></script>
+<style>
+  body { background:#1e1e1e; color:#e0e0e0; font-family:-apple-system,"PingFang SC",sans-serif; padding:32px; }
+  h1 { color:#d4af37; font-size:20px; }
+  p.sub { color:#9a9a9a; font-size:13px; margin-bottom:24px; }
+  .mermaid { display:flex; justify-content:center; }
+</style>
+</head>
+<body>
+<h1>grill-mcp 需求澄清访谈引擎 · 架构</h1>
+<p class="sub">确定性薄编排器（MCP 本体，零领域推理） + 领域专家 Agent（宿主 AI，唯一 LLM 推理步）</p>
+<div class="mermaid">
+flowchart TD
+    U["用户：模糊需求 / 任务输入"]
+
+    subgraph AI["宿主 AI · 领域专家 Agent（唯一 LLM 推理步）"]
+        direction LR
+        A1["分析 Agent<br/>requirement-analysis<br/>收窄本质 / 提炼待拍板点"]
+        A2["拷问 Agent<br/>grilling<br/>生成问题 + 推荐答案"]
+        A3["术语 Agent<br/>domain-modeling<br/>澄清术语 / 写 CONTEXT.md"]
+    end
+
+    subgraph MCP["grill-mcp · 确定性薄编排器（零领域推理）"]
+        direction TB
+        S1["1. Read<br/>create_session：需求 + 场景 + decision_points"]
+        S2["2. Check<br/>规范化校验：字段合法 / id 去重 / 依赖引用存在"]
+        S3["3. Route<br/>场景路由选必问模板<br/>medium-feature / large-migration / architecture / free"]
+        S4["4. Gather<br/>依赖排序 + 四格推导<br/>resolved / pending / fog / out_of_scope"]
+        S5["5. 持久化 Gate<br/>SQLite 落库 → 断点续谈、状态不丢"]
+        S6["finalize（M2）<br/>事实清单：方案写法 / CONTEXT.md / ADR"]
+        S1 --> S2 --> S3 --> S4 --> S5 --> S6
+    end
+
+    U ==>|模糊需求| AI
+    AI ==>|委派 decision_points（含推荐答案）| S1
+    S4 -.->|next_question 出题| AI
+    AI -.->|用户确认后 answer / mark_out_of_scope| S4
+    S6 -.->|事实清单喂给| D["to-spec / to-tickets"]
+</div>
+<script>mermaid.initialize({startOnLoad:true, theme:'dark'});</script>
+</body>
+</html>
